@@ -5,7 +5,7 @@ using Unity.Mathematics;
 
 namespace GameAssets.Scripts.Systems
 {
-    public partial struct EnitytMovementSystem : ISystem
+    public partial struct EntityMovementSystem : ISystem
     {
         [BurstCompile]
         public void OnCreate(ref SystemState state)
