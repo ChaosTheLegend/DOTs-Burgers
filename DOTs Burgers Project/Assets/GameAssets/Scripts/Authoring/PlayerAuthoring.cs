@@ -24,6 +24,7 @@ namespace GameAssets.Scripts.Authoring
                 AddComponent(entity, new PlayerTagComponent { AssignedPlayerId = authoring.playerId });
                 AddComponent(entity, new SpeedComponent { Value = authoring.playerSpeed });
                 AddComponent(entity, new DirectionComponent { Value = float3.zero });
+                AddComponent(entity, new PlayerInputComponent());
             }
         }
     }

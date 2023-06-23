@@ -10,18 +10,18 @@ namespace GameAssets.Scripts.Systems
     {
         protected override void OnUpdate()
         {
-            foreach (var entity in SystemAPI.Query<PlayerInputDirectionAspect>())
+            foreach (var entity in SystemAPI.Query<PlayerInputAspect>())
             {
                 var player = ReInput.players.GetPlayer(entity.GetPlayerId());
                 var horizontal = player.GetAxis("MoveHorizontal");
                 var vertical = player.GetAxis("MoveVertical");
                 
-                var direction = new float3(horizontal, 0, vertical);
-
-                //Fix for NANf error
-                if (math.lengthsq(direction) > 1f) direction = math.normalize(direction);
+                var movementAxis = new float2(horizontal,vertical);
                 
-                entity.SetDirection(direction);
+                var pickUp = player.GetButtonDown("PickUp");
+                
+                entity.playerInputComponent.ValueRW.pickUp = pickUp;
+                entity.playerInputComponent.ValueRW.movementAxis = movementAxis;
             }
         }
     }
