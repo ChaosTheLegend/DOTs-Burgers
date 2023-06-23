@@ -1,4 +1,4 @@
-﻿using GameAssets.Scripts.Aspects;
+﻿using GameAssets.Scripts.Components;
 using Unity.Entities;
 using UnityEngine;
 

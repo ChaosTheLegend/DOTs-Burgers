@@ -1,4 +1,5 @@
-﻿using GameAssets.Scripts.Aspects;
+﻿using System;
+using GameAssets.Scripts.Components;
 using Rewired;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -13,7 +14,7 @@ namespace GameAssets.Scripts.Authoring
         [Space]
         [SerializeField]
         private float playerSpeed = 1f;
-        
+
         
         public class PlayerTagComponentBaker : Baker<PlayerAuthoring>
         {

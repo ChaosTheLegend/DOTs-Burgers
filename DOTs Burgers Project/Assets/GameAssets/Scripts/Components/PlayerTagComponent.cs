@@ -1,8 +1,6 @@
-using Rewired;
 using Unity.Entities;
-using UnityEngine;
 
-namespace GameAssets.Scripts.Aspects
+namespace GameAssets.Scripts.Components
 {
     public partial struct PlayerTagComponent : IComponentData
     {

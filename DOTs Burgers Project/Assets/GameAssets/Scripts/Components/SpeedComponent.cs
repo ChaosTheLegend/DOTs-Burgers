@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-namespace GameAssets.Scripts.Aspects
+namespace GameAssets.Scripts.Components
 {
     public partial struct SpeedComponent : IComponentData
     {

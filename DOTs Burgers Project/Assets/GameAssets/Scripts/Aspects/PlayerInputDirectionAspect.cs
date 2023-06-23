@@ -1,4 +1,5 @@
-﻿using Unity.Entities;
+﻿using GameAssets.Scripts.Components;
+using Unity.Entities;
 using Unity.Mathematics;
 
 namespace GameAssets.Scripts.Aspects
