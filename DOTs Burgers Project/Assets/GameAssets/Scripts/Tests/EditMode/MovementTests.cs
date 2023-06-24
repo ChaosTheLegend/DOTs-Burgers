@@ -5,7 +5,6 @@ using NUnit.Framework;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEngine;
 
 namespace GameAssets.Scripts.Tests.EditMode
 {

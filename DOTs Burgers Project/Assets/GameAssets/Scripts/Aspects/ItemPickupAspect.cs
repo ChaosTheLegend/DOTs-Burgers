@@ -1,8 +1,9 @@
-﻿using Unity.Entities;
+﻿using GameAssets.Scripts.Temp;
+using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-namespace GameAssets.Scripts.Temp
+namespace GameAssets.Scripts.Aspects
 {
     public readonly partial struct ItemPickupAspect : IAspect
     {

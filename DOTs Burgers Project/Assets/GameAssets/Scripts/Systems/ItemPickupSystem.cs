@@ -11,7 +11,7 @@ namespace GameAssets.Scripts.Temp
     public partial struct PickUpJob : IJobEntity
     {
         [BurstCompile]
-        public void Execute(ItemCarrierAspect carrier, ItemPickupAspect pickup)
+        public void Execute(ItemCarrierAspect carrier, Aspects.ItemPickupAspect pickup)
         {
             if (!carrier.IsPickUpPressed()) return;
             if (!carrier.GetItem().Equals(ItemData.Null)) return;
@@ -44,7 +44,7 @@ namespace GameAssets.Scripts.Temp
                 if (!carrier.GetItem().Equals(ItemData.Null)) continue;
                 
             
-                foreach (var pickup in SystemAPI.Query<ItemPickupAspect>())
+                foreach (var pickup in SystemAPI.Query<Aspects.ItemPickupAspect>())
                 {
                     if (pickup.GetItem().Equals(ItemData.Null)) continue;
             
