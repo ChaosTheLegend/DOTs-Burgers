@@ -56,11 +56,16 @@ namespace GameAssets.Scripts.Temp
                     {
                         carrier.PickUpItem(pickup.GetItem());
                         entityCommandBuffer.AddComponent<IsPickedUpTagComponent>(pickup.GetEntity());
+                        entityCommandBuffer.AddComponent<Parent>(pickup.GetEntity());
                         entityCommandBuffer.RemoveComponent<ItemInWorldTagComponent>(pickup.GetEntity());
                         entityCommandBuffer.SetComponent(pickup.GetEntity(), new IsPickedUpTagComponent()
                         {
                             pickedUpBy = carrier.GetEntity(),
                             positionOffset = carrier.GetItemPositionOffset()
+                        });
+                        entityCommandBuffer.SetComponent(pickup.GetEntity(), new Parent()
+                        {
+                            Value = carrier.GetEntity()
                         });
                     }
                 }

@@ -13,7 +13,7 @@ namespace GameAssets.Scripts.Temp
             public override void Bake(ItemPickupComponentAuthoring authoring)
             {
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
-                AddComponent(entity, new ItemPickupComponent { Item = authoring.Item });
+                AddComponent(entity, new ItemComponent { Item = authoring.Item });
                 AddComponent(entity, new ItemInWorldTagComponent());
             }
         }

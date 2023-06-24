@@ -14,10 +14,10 @@ namespace GameAssets.Scripts.Tests.EditMode
         public void DestroyEmptyPickup()
         {
             var item = EntityManager.CreateEntity(
-                typeof(ItemPickupComponent)
+                typeof(ItemComponent)
             );
             
-            EntityManager.SetComponentData(item, new ItemPickupComponent
+            EntityManager.SetComponentData(item, new ItemComponent
             {
                 Item = ItemData.Null
             });
@@ -33,10 +33,10 @@ namespace GameAssets.Scripts.Tests.EditMode
         public void DontDestroyIfNotEmpty()
         {
             var item = EntityManager.CreateEntity(
-                typeof(ItemPickupComponent)
+                typeof(ItemComponent)
             );
             
-            EntityManager.SetComponentData(item, new ItemPickupComponent
+            EntityManager.SetComponentData(item, new ItemComponent
             {
                 Item = new ItemData {ItemId = 1}
             });

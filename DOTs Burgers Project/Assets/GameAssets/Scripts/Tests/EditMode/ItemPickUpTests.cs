@@ -10,6 +10,44 @@ namespace GameAssets.Scripts.Tests.EditMode
     [TestFixture]
     public class ItemPickUpTests : ECSTestBase
     {
+
+        [Test]
+        public void AddedParentAfterPickup()
+        {
+            var player = EntityManager.CreateEntity(
+                typeof(LocalTransform),
+                typeof(ItemCarryComponent),
+                typeof(PlayerInputComponent)
+            );
+            
+            var itemPickup = EntityManager.CreateEntity(
+                typeof(LocalTransform),
+                typeof(ItemComponent),
+                typeof(ItemInWorldTagComponent)
+            );
+            
+            var itemData = new ItemData()
+            {
+                ItemId = 1
+            };
+            
+            EntityManager.SetComponentData(player, new ItemCarryComponent { Item = ItemData.Null });
+            EntityManager.SetComponentData(player, new LocalTransform { Position = float3.zero });
+            EntityManager.SetComponentData(player, new PlayerInputComponent { pickUp = true});
+            
+            EntityManager.SetComponentData(itemPickup, new ItemComponent { Item = itemData });
+            EntityManager.SetComponentData(itemPickup, new LocalTransform { Position = float3.zero });
+            
+            World.CreateSystem<ItemPickupSystem>();
+            World.Update();
+            
+            //check if itemPickup has new component
+            Assert.IsTrue(EntityManager.HasComponent<Parent>(itemPickup));
+            
+            //check if itemPickup has correct parent
+            Assert.AreEqual(player, EntityManager.GetComponentData<Parent>(itemPickup).Value);
+        }
+        
         [Test]
         public void RemoveInWorldTagAfterPickup()
         {
@@ -21,7 +59,7 @@ namespace GameAssets.Scripts.Tests.EditMode
             
             var itemPickup = EntityManager.CreateEntity(
                 typeof(LocalTransform),
-                typeof(ItemPickupComponent),
+                typeof(ItemComponent),
                 typeof(ItemInWorldTagComponent)
             );
             
@@ -35,7 +73,7 @@ namespace GameAssets.Scripts.Tests.EditMode
             EntityManager.SetComponentData(player, new LocalTransform { Position = float3.zero });
             EntityManager.SetComponentData(player, new PlayerInputComponent { pickUp = true});
             
-            EntityManager.SetComponentData(itemPickup, new ItemPickupComponent { Item = itemData });
+            EntityManager.SetComponentData(itemPickup, new ItemComponent { Item = itemData });
             EntityManager.SetComponentData(itemPickup, new LocalTransform { Position = float3.zero });
             
             
@@ -57,7 +95,7 @@ namespace GameAssets.Scripts.Tests.EditMode
             
             var itemPickup = EntityManager.CreateEntity(
                 typeof(LocalTransform),
-                typeof(ItemPickupComponent)
+                typeof(ItemComponent)
             );
             
             var itemData = new ItemData()
@@ -69,7 +107,7 @@ namespace GameAssets.Scripts.Tests.EditMode
             EntityManager.SetComponentData(player, new LocalTransform { Position = float3.zero });
             EntityManager.SetComponentData(player, new PlayerInputComponent { pickUp = true});
             
-            EntityManager.SetComponentData(itemPickup, new ItemPickupComponent { Item = itemData });
+            EntityManager.SetComponentData(itemPickup, new ItemComponent { Item = itemData });
             EntityManager.SetComponentData(itemPickup, new LocalTransform { Position = float3.zero });
             
             Assert.AreEqual(ItemData.Null, EntityManager.GetComponentData<ItemCarryComponent>(player).Item);
@@ -86,7 +124,7 @@ namespace GameAssets.Scripts.Tests.EditMode
             
             var itemPickup = EntityManager.CreateEntity(
                 typeof(LocalTransform),
-                typeof(ItemPickupComponent),
+                typeof(ItemComponent),
                 typeof(ItemInWorldTagComponent)
             );
             
@@ -100,7 +138,7 @@ namespace GameAssets.Scripts.Tests.EditMode
             EntityManager.SetComponentData(player, new LocalTransform { Position = float3.zero });
             EntityManager.SetComponentData(player, new PlayerInputComponent { pickUp = true});
             
-            EntityManager.SetComponentData(itemPickup, new ItemPickupComponent { Item = itemData });
+            EntityManager.SetComponentData(itemPickup, new ItemComponent { Item = itemData });
             EntityManager.SetComponentData(itemPickup, new LocalTransform { Position = float3.zero });
             
             
@@ -123,7 +161,7 @@ namespace GameAssets.Scripts.Tests.EditMode
             
             var itemPickup = EntityManager.CreateEntity(
                 typeof(LocalTransform),
-                typeof(ItemPickupComponent),
+                typeof(ItemComponent),
                 typeof(ItemInWorldTagComponent)
             );
             
@@ -137,7 +175,7 @@ namespace GameAssets.Scripts.Tests.EditMode
             EntityManager.SetComponentData(player, new LocalTransform { Position = float3.zero });
             EntityManager.SetComponentData(player, new PlayerInputComponent { pickUp = true});
             
-            EntityManager.SetComponentData(itemPickup, new ItemPickupComponent { Item = itemData });
+            EntityManager.SetComponentData(itemPickup, new ItemComponent { Item = itemData });
             EntityManager.SetComponentData(itemPickup, new LocalTransform { Position = float3.zero });
             
             
@@ -161,7 +199,7 @@ namespace GameAssets.Scripts.Tests.EditMode
             
             var itemPickup = EntityManager.CreateEntity(
                 typeof(LocalTransform),
-                typeof(ItemPickupComponent),
+                typeof(ItemComponent),
                 typeof(ItemInWorldTagComponent)
             );
             
@@ -175,7 +213,7 @@ namespace GameAssets.Scripts.Tests.EditMode
             EntityManager.SetComponentData(player, new LocalTransform { Position = float3.zero });
             EntityManager.SetComponentData(player, new PlayerInputComponent { pickUp = true});
             
-            EntityManager.SetComponentData(itemPickup, new ItemPickupComponent { Item = itemData });
+            EntityManager.SetComponentData(itemPickup, new ItemComponent { Item = itemData });
             EntityManager.SetComponentData(itemPickup, new LocalTransform { Position = float3.zero });
             
             
@@ -198,7 +236,7 @@ namespace GameAssets.Scripts.Tests.EditMode
             
             var itemPickup = EntityManager.CreateEntity(
                 typeof(LocalTransform),
-                typeof(ItemPickupComponent),
+                typeof(ItemComponent),
                 typeof(ItemInWorldTagComponent)
             );
             
@@ -212,7 +250,7 @@ namespace GameAssets.Scripts.Tests.EditMode
             EntityManager.SetComponentData(player, new LocalTransform { Position = float3.zero });
             EntityManager.SetComponentData(player, new PlayerInputComponent { pickUp = true});
             
-            EntityManager.SetComponentData(itemPickup, new ItemPickupComponent { Item = itemData });
+            EntityManager.SetComponentData(itemPickup, new ItemComponent { Item = itemData });
             EntityManager.SetComponentData(itemPickup, new LocalTransform { Position = new float3(100,100,100) });
             
             
@@ -236,7 +274,7 @@ namespace GameAssets.Scripts.Tests.EditMode
             
             var itemPickup = EntityManager.CreateEntity(
                 typeof(LocalTransform),
-                typeof(ItemPickupComponent),
+                typeof(ItemComponent),
                 typeof(ItemInWorldTagComponent)
             );
             
@@ -255,7 +293,7 @@ namespace GameAssets.Scripts.Tests.EditMode
             EntityManager.SetComponentData(player, new LocalTransform { Position = float3.zero });
             EntityManager.SetComponentData(player, new PlayerInputComponent { pickUp = true});
             
-            EntityManager.SetComponentData(itemPickup, new ItemPickupComponent { Item = itemData2 });
+            EntityManager.SetComponentData(itemPickup, new ItemComponent { Item = itemData2 });
             EntityManager.SetComponentData(itemPickup, new LocalTransform { Position = float3.zero });
             
             
@@ -278,7 +316,7 @@ namespace GameAssets.Scripts.Tests.EditMode
             
             var itemPickup = EntityManager.CreateEntity(
                 typeof(LocalTransform),
-                typeof(ItemPickupComponent),
+                typeof(ItemComponent),
                 typeof(ItemInWorldTagComponent)
             );
             
@@ -292,7 +330,7 @@ namespace GameAssets.Scripts.Tests.EditMode
             EntityManager.SetComponentData(player, new LocalTransform { Position = float3.zero });
             EntityManager.SetComponentData(player, new PlayerInputComponent { pickUp = false});
             
-            EntityManager.SetComponentData(itemPickup, new ItemPickupComponent { Item = itemData });
+            EntityManager.SetComponentData(itemPickup, new ItemComponent { Item = itemData });
             EntityManager.SetComponentData(itemPickup, new LocalTransform { Position = float3.zero });
             
             

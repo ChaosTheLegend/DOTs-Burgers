@@ -10,7 +10,7 @@ namespace GameAssets.Scripts.Aspects
     {
         private readonly Entity _entity;
         
-        private readonly RefRW<ItemPickupComponent> _itemPickupComponent;
+        private readonly RefRW<ItemComponent> _itemPickupComponent;
         private readonly RefRO<LocalTransform> _localTransform;
         private readonly RefRO<ItemInWorldTagComponent> _itemInWorldTagComponent;
         

@@ -25,7 +25,8 @@ namespace GameAssets.Scripts.Systems
     {
         public readonly Entity entity;
         
-        public readonly RefRO<ItemPickupComponent> ItemPickupComponent;
+        public readonly RefRO<ItemComponent> ItemPickupComponent;
+        public readonly RefRO<ItemInWorldTagComponent> ItemInWorldTagComponent;
     }
     
     public partial struct ItemPickupDestroySystem : ISystem
