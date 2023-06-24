@@ -5,6 +5,16 @@ using Unity.Mathematics;
 
 namespace GameAssets.Scripts.Systems
 {
+    public partial struct EntityMovementJob : IJobEntity
+    {
+        public float deltaTime;
+        [BurstCompile]
+        private void Execute(EntityMovementAspect entity)
+        {
+            entity.MoveTowardsDirection(deltaTime);
+        }
+    }
+    
     public partial struct EntityMovementSystem : ISystem
     {
         [BurstCompile]
@@ -18,10 +28,12 @@ namespace GameAssets.Scripts.Systems
         {
             var deltaTime = state.World.Time.DeltaTime;
             
-            foreach (var entity in SystemAPI.Query<EntityMovementAspect>())
+            var jobHandle = new EntityMovementJob
             {
-                entity.MoveTowardsDirection(deltaTime);
-            }
+                deltaTime = deltaTime
+            }.ScheduleParallel(state.Dependency);
+            
+            jobHandle.Complete();
         }
 
         [BurstCompile]

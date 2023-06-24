@@ -8,6 +8,9 @@ namespace GameAssets.Scripts.Systems
 {
     public partial class PlayerInputProcessSystem : SystemBase
     {
+        
+        //This cannot be burst compiled because it uses Rewired
+        
         protected override void OnUpdate()
         {
             foreach (var entity in SystemAPI.Query<PlayerInputAspect>())

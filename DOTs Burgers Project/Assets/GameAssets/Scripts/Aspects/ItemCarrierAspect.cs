@@ -1,4 +1,5 @@
-﻿using Unity.Entities;
+﻿using GameAssets.Scripts.Components;
+using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
@@ -10,10 +11,15 @@ namespace GameAssets.Scripts.Temp
         
         private readonly RefRW<ItemCarryComponent> _itemCarryComponent;
         private readonly RefRO<LocalTransform> _localTransform;
-        
+        private readonly RefRO<PlayerInputComponent> _playerInputComponent;
         public void DropItem()
         {
             _itemCarryComponent.ValueRW.Item = ItemData.Null;
+        }
+        
+        public bool IsPickUpPressed()
+        {
+            return _playerInputComponent.ValueRO.pickUp;
         }
         
         public void PickUpItem(ItemData item)

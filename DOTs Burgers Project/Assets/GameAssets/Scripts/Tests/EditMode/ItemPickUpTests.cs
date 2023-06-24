@@ -1,4 +1,5 @@
-﻿using GameAssets.Scripts.Temp;
+﻿using GameAssets.Scripts.Components;
+using GameAssets.Scripts.Temp;
 using NUnit.Framework;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -15,7 +16,8 @@ namespace GameAssets.Scripts.Tests.EditMode
             
             var player = EntityManager.CreateEntity(
                 typeof(LocalTransform),
-                typeof(ItemCarryComponent)
+                typeof(ItemCarryComponent),
+                typeof(PlayerInputComponent)
             );
             
             var itemPickup = EntityManager.CreateEntity(
@@ -31,7 +33,8 @@ namespace GameAssets.Scripts.Tests.EditMode
             
             EntityManager.SetComponentData(player, new ItemCarryComponent { Item = ItemData.Null });
             EntityManager.SetComponentData(player, new LocalTransform { Position = float3.zero });
-
+            EntityManager.SetComponentData(player, new PlayerInputComponent { pickUp = true});
+            
             EntityManager.SetComponentData(itemPickup, new ItemPickupComponent { Item = itemData });
             EntityManager.SetComponentData(itemPickup, new LocalTransform { Position = float3.zero });
             
@@ -46,16 +49,19 @@ namespace GameAssets.Scripts.Tests.EditMode
         [Test]
         public void DontPickUpItemIfFarAway()
         {
+            
             var player = EntityManager.CreateEntity(
-                typeof(ItemCarryComponent), 
-                typeof(LocalTransform)
+                typeof(LocalTransform),
+                typeof(ItemCarryComponent),
+                typeof(PlayerInputComponent)
             );
             
             var itemPickup = EntityManager.CreateEntity(
-                typeof(ItemPickupComponent),
-                typeof(LocalTransform)
+                typeof(LocalTransform),
+                typeof(ItemPickupComponent)
             );
             
+
             var itemData = new ItemData()
             {
                 ItemId = 1
@@ -63,31 +69,37 @@ namespace GameAssets.Scripts.Tests.EditMode
             
             EntityManager.SetComponentData(player, new ItemCarryComponent { Item = ItemData.Null });
             EntityManager.SetComponentData(player, new LocalTransform { Position = float3.zero });
-
+            EntityManager.SetComponentData(player, new PlayerInputComponent { pickUp = true});
+            
             EntityManager.SetComponentData(itemPickup, new ItemPickupComponent { Item = itemData });
-            EntityManager.SetComponentData(itemPickup, new LocalTransform { Position = new float3(0,0,10) });
+            EntityManager.SetComponentData(itemPickup, new LocalTransform { Position = new float3(100,100,100) });
             
             
             World.CreateSystem<ItemPickupSystem>();
             World.Update();
             
-            Assert.AreEqual(ItemData.Null.ItemId,EntityManager.GetComponentData<ItemCarryComponent>(player).Item.ItemId);
+            
+            Assert.AreEqual(ItemData.Null,EntityManager.GetComponentData<ItemCarryComponent>(player).Item);
         }
-        
+
+
         [Test]
-        public void DontPickUpItemIfAlreadyCarrying()
+        public void DontPickUpItemIfNotEmpty()
         {
+            
             var player = EntityManager.CreateEntity(
-                typeof(ItemCarryComponent), 
-                typeof(LocalTransform)
+                typeof(LocalTransform),
+                typeof(ItemCarryComponent),
+                typeof(PlayerInputComponent)
             );
             
             var itemPickup = EntityManager.CreateEntity(
-                typeof(ItemPickupComponent),
-                typeof(LocalTransform)
+                typeof(LocalTransform),
+                typeof(ItemPickupComponent)
             );
             
-            var itemData1 = new ItemData()
+
+            var itemData = new ItemData()
             {
                 ItemId = 1
             };
@@ -97,9 +109,10 @@ namespace GameAssets.Scripts.Tests.EditMode
                 ItemId = 2
             };
             
-            EntityManager.SetComponentData(player, new ItemCarryComponent { Item = itemData1 });
+            EntityManager.SetComponentData(player, new ItemCarryComponent { Item = itemData });
             EntityManager.SetComponentData(player, new LocalTransform { Position = float3.zero });
-
+            EntityManager.SetComponentData(player, new PlayerInputComponent { pickUp = true});
+            
             EntityManager.SetComponentData(itemPickup, new ItemPickupComponent { Item = itemData2 });
             EntityManager.SetComponentData(itemPickup, new LocalTransform { Position = float3.zero });
             
@@ -107,7 +120,44 @@ namespace GameAssets.Scripts.Tests.EditMode
             World.CreateSystem<ItemPickupSystem>();
             World.Update();
             
-            Assert.AreEqual(itemData1.ItemId,EntityManager.GetComponentData<ItemCarryComponent>(player).Item.ItemId);
+            
+            Assert.AreEqual(itemData.ItemId,EntityManager.GetComponentData<ItemCarryComponent>(player).Item.ItemId);
+        }
+        
+        [Test]
+        public void DontPickUpDataIfKeyNotPressed()
+        {
+            
+            var player = EntityManager.CreateEntity(
+                typeof(LocalTransform),
+                typeof(ItemCarryComponent),
+                typeof(PlayerInputComponent)
+            );
+            
+            var itemPickup = EntityManager.CreateEntity(
+                typeof(LocalTransform),
+                typeof(ItemPickupComponent)
+            );
+            
+
+            var itemData = new ItemData()
+            {
+                ItemId = 1
+            };
+            
+            EntityManager.SetComponentData(player, new ItemCarryComponent { Item = ItemData.Null });
+            EntityManager.SetComponentData(player, new LocalTransform { Position = float3.zero });
+            EntityManager.SetComponentData(player, new PlayerInputComponent { pickUp = false});
+            
+            EntityManager.SetComponentData(itemPickup, new ItemPickupComponent { Item = itemData });
+            EntityManager.SetComponentData(itemPickup, new LocalTransform { Position = float3.zero });
+            
+            
+            World.CreateSystem<ItemPickupSystem>();
+            World.Update();
+            
+            
+            Assert.AreEqual(ItemData.Null,EntityManager.GetComponentData<ItemCarryComponent>(player).Item);
         }
     }
 }
