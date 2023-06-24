@@ -1,3 +1,4 @@
+using GameAssets.Scripts.Components;
 using Unity.Entities;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ namespace GameAssets.Scripts.Temp
             {
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
                 AddComponent(entity, new ItemPickupComponent { Item = authoring.Item });
+                AddComponent(entity, new ItemInWorldTagComponent());
             }
         }
     }

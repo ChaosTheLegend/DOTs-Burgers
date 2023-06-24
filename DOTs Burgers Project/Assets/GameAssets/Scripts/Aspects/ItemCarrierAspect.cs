@@ -17,6 +17,11 @@ namespace GameAssets.Scripts.Temp
             _itemCarryComponent.ValueRW.Item = ItemData.Null;
         }
         
+        public float3 GetItemPositionOffset()
+        {
+            return _itemCarryComponent.ValueRO.itemPositionOffset;
+        }
+        
         public bool IsPickUpPressed()
         {
             return _playerInputComponent.ValueRO.pickUp;
@@ -35,6 +40,11 @@ namespace GameAssets.Scripts.Temp
         public float3 GetPosition()
         {
             return _localTransform.ValueRO.Position;
+        }
+        
+        public Entity GetEntity()
+        {
+            return _entity;
         }
     }
 }
