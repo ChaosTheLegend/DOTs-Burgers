@@ -21,7 +21,7 @@ namespace GameAssets.Scripts.Temp
         
             if (math.distancesq(carrier.GetPosition(), pickup.GetPosition()) < 1f)
             {
-                carrier.PickUpItem(pickup.GetItem());
+                carrier.PickUpItem(pickup.GetItem(), pickup.GetEntity());
                 pickup.DeleteItem();
             }
         }
@@ -54,7 +54,7 @@ namespace GameAssets.Scripts.Temp
             
                     if (math.distancesq(carrier.GetPosition(), pickup.GetPosition()) < 1f)
                     {
-                        carrier.PickUpItem(pickup.GetItem());
+                        carrier.PickUpItem(pickup.GetItem(), pickup.GetEntity());
                         entityCommandBuffer.AddComponent<IsPickedUpTagComponent>(pickup.GetEntity());
                         entityCommandBuffer.AddComponent<Parent>(pickup.GetEntity());
                         entityCommandBuffer.RemoveComponent<ItemInWorldTagComponent>(pickup.GetEntity());

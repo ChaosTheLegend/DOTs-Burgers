@@ -15,6 +15,7 @@ namespace GameAssets.Scripts.Temp
         public void DropItem()
         {
             _itemCarryComponent.ValueRW.Item = ItemData.Null;
+            _itemCarryComponent.ValueRW.ItemEntity = Entity.Null;
         }
         
         public float3 GetItemPositionOffset()
@@ -26,10 +27,16 @@ namespace GameAssets.Scripts.Temp
         {
             return _playerInputComponent.ValueRO.pickUp;
         }
+
+        public bool IsDropPressed()
+        {
+            return _playerInputComponent.ValueRO.drop;
+        }
         
-        public void PickUpItem(ItemData item)
+        public void PickUpItem(ItemData item, Entity entity)
         {
             _itemCarryComponent.ValueRW.Item = item;
+            _itemCarryComponent.ValueRW.ItemEntity = entity;
         }
         
         public ItemData GetItem()
@@ -45,6 +52,11 @@ namespace GameAssets.Scripts.Temp
         public Entity GetEntity()
         {
             return _entity;
+        }
+
+        public Entity GetPickedUpEntity()
+        {
+            return _itemCarryComponent.ValueRO.ItemEntity;
         }
     }
 }

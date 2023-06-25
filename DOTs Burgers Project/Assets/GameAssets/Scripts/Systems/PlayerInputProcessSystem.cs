@@ -22,7 +22,9 @@ namespace GameAssets.Scripts.Systems
                 var movementAxis = new float2(horizontal,vertical);
                 
                 var pickUp = player.GetButtonDown("PickUp");
+                var drop = player.GetButtonDown("Drop");
                 
+                entity.playerInputComponent.ValueRW.drop = drop;
                 entity.playerInputComponent.ValueRW.pickUp = pickUp;
                 entity.playerInputComponent.ValueRW.movementAxis = movementAxis;
             }

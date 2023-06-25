@@ -7,6 +7,8 @@ namespace GameAssets.Scripts.Temp
     {
         public ItemData Item;
         
+        public Entity ItemEntity;
+        
         public float3 itemPositionOffset;
     }
 }

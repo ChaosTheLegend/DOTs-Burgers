@@ -14,7 +14,8 @@ namespace GameAssets.Scripts.Tests.EditMode
         public void DestroyEmptyPickup()
         {
             var item = EntityManager.CreateEntity(
-                typeof(ItemComponent)
+                typeof(ItemComponent),
+                typeof(ItemInWorldTagComponent)
             );
             
             EntityManager.SetComponentData(item, new ItemComponent

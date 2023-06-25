@@ -10,7 +10,40 @@ namespace GameAssets.Scripts.Tests.EditMode
     [TestFixture]
     public class ItemPickUpTests : ECSTestBase
     {
-
+        [Test]
+        public void EntityIsSetAfterPickUp()
+        {
+            var player = EntityManager.CreateEntity(
+                typeof(LocalTransform),
+                typeof(ItemCarryComponent),
+                typeof(PlayerInputComponent)
+            );
+            
+            var itemPickup = EntityManager.CreateEntity(
+                typeof(LocalTransform),
+                typeof(ItemComponent),
+                typeof(ItemInWorldTagComponent)
+            );
+            
+            var itemData = new ItemData()
+            {
+                ItemId = 1
+            };
+            
+            EntityManager.SetComponentData(player, new ItemCarryComponent { Item = ItemData.Null });
+            EntityManager.SetComponentData(player, new LocalTransform { Position = float3.zero });
+            EntityManager.SetComponentData(player, new PlayerInputComponent { pickUp = true});
+            
+            EntityManager.SetComponentData(itemPickup, new ItemComponent { Item = itemData });
+            EntityManager.SetComponentData(itemPickup, new LocalTransform { Position = float3.zero });
+            
+            World.CreateSystem<ItemPickupSystem>();
+            World.Update();
+            
+            Assert.AreEqual(itemPickup, EntityManager.GetComponentData<ItemCarryComponent>(player).ItemEntity);
+        }
+        
+        
         [Test]
         public void AddedParentAfterPickup()
         {
