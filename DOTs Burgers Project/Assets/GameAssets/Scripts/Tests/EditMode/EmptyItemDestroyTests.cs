@@ -23,7 +23,7 @@ namespace GameAssets.Scripts.Tests.EditMode
                 Item = ItemData.Null
             });
 
-            World.CreateSystem<ItemPickupDestroySystem>();
+            World.CreateSystem<InWorldItemDestroySystem>();
             World.Update();
             
             //check if item has destroyed tag
@@ -42,7 +42,7 @@ namespace GameAssets.Scripts.Tests.EditMode
                 Item = new ItemData {ItemId = 1}
             });
             
-            World.CreateSystem<ItemPickupDestroySystem>();
+            World.CreateSystem<InWorldItemDestroySystem>();
             World.Update();
             
             //check if item has destroyed tag

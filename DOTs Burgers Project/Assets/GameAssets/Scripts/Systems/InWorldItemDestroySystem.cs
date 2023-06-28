@@ -29,7 +29,7 @@ namespace GameAssets.Scripts.Systems
         public readonly RefRO<ItemInWorldTagComponent> ItemInWorldTagComponent;
     }
     
-    public partial struct ItemPickupDestroySystem : ISystem
+    public partial struct InWorldItemDestroySystem : ISystem
     {
         [BurstCompile]
         public void OnCreate(ref SystemState state)
